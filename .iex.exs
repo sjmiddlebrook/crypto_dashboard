@@ -1,0 +1,1 @@
+alias CryptoDashboard.{Trade, Product}

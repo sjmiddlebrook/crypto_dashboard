@@ -1,5 +1,7 @@
 defmodule CryptoDashboard.Exchanges.CoinbaseClient do
   use GenServer
+  alias CryptoDashboard.{Trade, Product}
+  @exchange_name "coinbase"
 
   def start_link(currency_pairs, options \\ []) do
     GenServer.start_link(__MODULE__, currency_pairs, options)
@@ -41,7 +43,9 @@ defmodule CryptoDashboard.Exchanges.CoinbaseClient do
   end
 
   def handle_ws_message(%{"type" => "ticker"} = msg, state) do
-    IO.inspect(msg, label: "ticker")
+    trade =
+      message_to_trade(msg)
+      |> IO.inspect(label: "ticker")
     {:noreply, state}
   end
 
@@ -63,5 +67,25 @@ defmodule CryptoDashboard.Exchanges.CoinbaseClient do
           }
           |> Jason.encode!()
     [{:text, msg}]
+  end
+
+  def message_to_trade(msg) do
+    currency_pair = msg["product_id"]
+    product = Product.new(@exchange_name, currency_pair)
+    price = msg["price"]
+    volume = msg["last_size"]
+    traded_at = datetime_from_string(msg["time"])
+
+    Trade.new(
+      product: product,
+      price: price,
+      volume: volume,
+      traded_at: traded_at
+    )
+  end
+
+  defp datetime_from_string(time_string) do
+    {:ok, dt, _} = DateTime.from_iso8601(time_string)
+    dt
   end
 end
