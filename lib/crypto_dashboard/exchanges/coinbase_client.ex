@@ -69,23 +69,30 @@ defmodule CryptoDashboard.Exchanges.CoinbaseClient do
     [{:text, msg}]
   end
 
+  @spec message_to_trade(map()) :: {:ok, Trade.t() | {:error, any()}}
   def message_to_trade(msg) do
-    currency_pair = msg["product_id"]
-    product = Product.new(@exchange_name, currency_pair)
-    price = msg["price"]
-    volume = msg["last_size"]
-    traded_at = datetime_from_string(msg["time"])
+    with :ok <- validate_required(msg, ["product_id", "time", "price", "last_size"]),
+         {:ok, traded_at, _} <- DateTime.from_iso8601(msg["time"])
+      do
+      currency_pair = msg["product_id"]
 
-    Trade.new(
-      product: product,
-      price: price,
-      volume: volume,
-      traded_at: traded_at
-    )
+      Trade.new(
+        product: Product.new(@exchange_name, currency_pair),
+        price: msg["price"],
+        volume: msg["last_size"],
+        traded_at: traded_at
+      )
+    else
+      {:error, _reason} = error -> error
+    end
   end
 
-  defp datetime_from_string(time_string) do
-    {:ok, dt, _} = DateTime.from_iso8601(time_string)
-    dt
+  @spec validate_required(map(), [String.t()]) :: :ok | {:error, {String.t(), :required}}
+  def validate_required(msg, keys) do
+    required_key = Enum.find(keys, fn k -> is_nil(msg[k]) end)
+    check_required_key(required_key)
   end
+
+  defp check_required_key(nil), do: :ok
+  defp check_required_key(required_key), do: {:error, {required_key, :required}}
 end
