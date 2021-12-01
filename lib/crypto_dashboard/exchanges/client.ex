@@ -39,7 +39,7 @@ defmodule CryptoDashboard.Exchanges.Client do
     port = server_port(client.module)
     {:ok, conn} = :gun.open(host, port, %{protocols: [:http]})
     conn_ref = Process.monitor(conn)
-    %{client | conn: conn}
+    %{client | conn: conn, conn_ref: conn_ref}
   end
 
   defp server_host(module), do: module.server_host()
