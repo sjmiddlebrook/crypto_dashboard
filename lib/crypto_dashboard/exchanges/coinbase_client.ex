@@ -1,13 +1,14 @@
 defmodule CryptoDashboard.Exchanges.CoinbaseClient do
   alias CryptoDashboard.{Trade, Product}
   alias CryptoDashboard.Exchanges.Client
-  import Client, only: [validate_required: 2]
+  require Client
 
-  @behaviour Client
-
-  def exchange_name, do: "coinbase"
-  def server_host, do: 'ws-feed.pro.coinbase.com'
-  def server_port, do: 443
+  Client.defclient(
+    exchange_name: "coinbase",
+    host: 'ws-feed.pro.coinbase.com',
+    port: 443,
+    currency_pairs: ["BTC-USD", "ETH-USD", "LTC-USD", "BTC-EUR", "ETH-EUR", "LTC-EUR"]
+  )
 
   def subscription_frames(currency_pairs) do
     msg =
