@@ -1,13 +1,14 @@
 defmodule CryptoDashboard.Exchanges.BitstampClient do
   alias CryptoDashboard.{Trade, Product}
   alias CryptoDashboard.Exchanges.Client
-  import Client, only: [validate_required: 2]
+  require Client
 
-  @behaviour Client
-
-  def exchange_name, do: "bitstamp"
-  def server_host, do: 'ws.bitstamp.net'
-  def server_port, do: 443
+  Client.defclient(
+    exchange_name: "bitstamp",
+    host: 'ws.bitstamp.net',
+    port: 443,
+    currency_pairs: ["btcusd", "ethusd", "ltcusd", "btceur", "etheur", "ltceur"]
+  )
 
   def handle_ws_message(%{"event" => "trade"} = msg, state) do
     _trade =
