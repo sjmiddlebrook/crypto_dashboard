@@ -41,12 +41,13 @@ defmodule CryptoDashboard.Exchanges.CoinbaseClient do
          {:ok, traded_at, _} <- DateTime.from_iso8601(msg["time"]) do
       currency_pair = msg["product_id"]
 
-      trade = Trade.new(
-        product: Product.new(exchange_name(), currency_pair),
-        price: msg["price"],
-        volume: msg["last_size"],
-        traded_at: traded_at
-      )
+      trade =
+        Trade.new(
+          product: Product.new(exchange_name(), currency_pair),
+          price: msg["price"],
+          volume: msg["last_size"],
+          traded_at: traded_at
+        )
 
       {:ok, trade}
     else

@@ -45,12 +45,14 @@ defmodule CryptoDashboard.Exchanges.BitstampClient do
       when is_map(data) do
     with :ok <- validate_required(data, ["timestamp", "price_str", "amount_str"]),
          {:ok, traded_at} <- convert_timestamp(data["timestamp"]) do
-      trade = Trade.new(
-        product: Product.new(exchange_name(), currency_pair),
-        price: data["price_str"],
-        volume: data["amount_str"],
-        traded_at: traded_at
-      )
+      trade =
+        Trade.new(
+          product: Product.new(exchange_name(), currency_pair),
+          price: data["price_str"],
+          volume: data["amount_str"],
+          traded_at: traded_at
+        )
+
       {:ok, trade}
     else
       {:error, _reason} = error -> error

@@ -38,7 +38,7 @@ defmodule CryptoDashboard.Exchanges.Client do
         {:noreply, client}
       end
 
-      defoverridable([handle_ws_message: 2])
+      defoverridable(handle_ws_message: 2)
     end
   end
 
