@@ -1,5 +1,5 @@
 defmodule CryptoDashboard.Exchanges.CoinbaseClient do
-  alias CryptoDashboard.{Trade, Product}
+  alias CryptoDashboard.{Trade, Product, Exchanges}
   alias CryptoDashboard.Exchanges.Client
   require Client
 
@@ -23,10 +23,8 @@ defmodule CryptoDashboard.Exchanges.CoinbaseClient do
   end
 
   def handle_ws_message(%{"type" => "ticker"} = msg, state) do
-    _trade =
-      message_to_trade(msg)
-      |> IO.inspect(label: "ticker")
-
+    {:ok, trade} = message_to_trade(msg)
+    Exchanges.broadcast(trade)
     {:noreply, state}
   end
 
