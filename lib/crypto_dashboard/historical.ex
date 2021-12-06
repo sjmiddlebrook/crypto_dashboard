@@ -19,7 +19,7 @@ defmodule CryptoDashboard.Historical do
   end
 
   def start_link(opts) do
-    {products, opts} = Keyword.pop(opts, :products, [])
+    {products, opts} = Keyword.pop(opts, :products, Exchanges.available_products())
     GenServer.start_link(__MODULE__, products, opts)
   end
 

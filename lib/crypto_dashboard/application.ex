@@ -12,6 +12,8 @@ defmodule CryptoDashboard.Application do
       CryptoDashboardWeb.Telemetry,
       # Start the PubSub system
       {Phoenix.PubSub, name: CryptoDashboard.PubSub},
+      {CryptoDashboard.Historical, name: CryptoDashboard.Historical},
+      {CryptoDashboard.Exchanges.Supervisor, name: CryptoDashboard.Exchanges.Supervisor},
       # Start the Endpoint (http/https)
       CryptoDashboardWeb.Endpoint
       # Start a worker by calling: CryptoDashboard.Worker.start_link(arg)
