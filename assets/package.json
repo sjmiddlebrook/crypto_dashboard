@@ -1,6 +1,9 @@
 {
   "scripts": {
-    "deploy": "NODE_ENV=production tailwindcss --postcss --minify --input=css/app.css --output=../priv/static/assets/app.css"
+
+    "build_css": "NODE_ENV=production tailwindcss --postcss --minify --input=css/app.css --output=../priv/static/assets/app.css",
+    "build_js": "esbuild js/app.js --outfile=../priv/static/assets/app.js",
+    "deploy": "npm run build_css & npm run build_js"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.0",
@@ -9,6 +12,7 @@
     "tailwindcss": "^2.2.19"
   },
   "dependencies": {
-    "alpinejs": "^3.5.2"
+    "alpinejs": "^3.5.2",
+    "esbuild": "^0.14.2"
   }
 }
