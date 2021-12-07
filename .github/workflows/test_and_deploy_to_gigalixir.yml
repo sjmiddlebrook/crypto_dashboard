@@ -8,19 +8,19 @@ jobs:
       matrix:
         otp: [24.1]
         elixir: [1.12.3]
-      steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-elixir@v1
-        with:
-          otp-version: ${{ matrix.otp }}
-          elixir-version: ${{ matrix.elixir }}
-      - name: Setup Node
-        uses: actions/setup-node@v1
-        with:
-          node-version: 16.13.0
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-elixir@v1
+      with:
+        otp-version: ${{ matrix.otp }}
+        elixir-version: ${{ matrix.elixir }}
+    - name: Setup Node
+      uses: actions/setup-node@v1
+      with:
+        node-version: 16.13.0
 
-      - name: Install deps
-        run: |
-          mix deps.get
-          npm install --prefix assets
-      - run: mix test
+    - name: Install deps
+      run: |
+        mix deps.get
+        npm install --prefix assets
+    - run: mix test
