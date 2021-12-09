@@ -1,3 +1,29 @@
+<form action="#"
+      phx-submit="add-product"
+>
+  <select name="product_id">
+    <option selected disabled>Add a Crypto Product</option>
+    <%= for product <- CryptoDashboard.available_products() do %>
+      <option value="<%= to_string(product) %>">
+        <%= product.exchange_name %> - <%= product.currency_pair %>
+      </option>
+    <% end %>
+  </select>
+  <button
+    phx-disable-with="Loading..."
+    type="submit"
+    value="Add product"
+    class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+  >Add product</button>
+</form>
+<form class="py-8" action="#" phx-change="filter-products">
+  <input
+    phx-debounce="400"
+    type="text"
+    name="search"
+    class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border border-gray-300 rounded-md"
+  >
+</form>
 <div class="flex flex-col">
   <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
     <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
