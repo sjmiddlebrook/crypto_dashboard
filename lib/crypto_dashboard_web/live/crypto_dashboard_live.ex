@@ -1,6 +1,7 @@
 defmodule CryptoDashboardWeb.CryptoDashboardLive do
   use CryptoDashboardWeb, :live_view
   alias CryptoDashboard.Product
+  import CryptoDashboardWeb.ProductHelpers
 
   def mount(_params, _session, socket) do
     socket = assign(socket, trades: %{}, products: [])
@@ -52,5 +53,10 @@ defmodule CryptoDashboardWeb.CryptoDashboardLive do
   defp add_product(_, socket, _product) do
     socket
     |> put_flash(:error, "product already added")
+  end
+
+  defp grouped_products_by_exchange_name() do
+    CryptoDashboard.available_products()
+    |> Enum.group_by(& &1.exchange_name)
   end
 end
