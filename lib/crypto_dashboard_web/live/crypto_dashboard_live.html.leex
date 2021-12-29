@@ -31,26 +31,7 @@
   >
 </form>
 <div class="grid grid-cols-1 gap-y-4 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-10 lg:grid-cols-3 lg:gap-x-8">
-  <%= for product <- @products, trade = @trades[product], not is_nil(trade) do %>
-  <div class="group relative bg-white border border-gray-200 rounded-lg flex flex-col overflow-hidden">
-    <div class="aspect-w-4 aspect-h-2 bg-gray-200 group-hover:opacity-75 sm:aspect-none sm:h-48">
-      <img class="w-full h-full object-center object-cover" src="<%= crypto_icon(@socket, product) %>">
-    </div>
-    <div class="flex-1 p-4 space-y-2 flex flex-col">
-      <h3 class="text-sm font-medium text-gray-900">
-        <a href="#">
-          <span aria-hidden="true" class="absolute inset-0"></span>
-          <%= crypto_name(trade.product) %>
-        </a>
-      </h3>
-      <p class="text-sm text-gray-500"><%= trade.product.exchange_name %></p>
-      <div class="flex-1 flex flex-col justify-end">
-        <p class="text-sm italic text-gray-500"><%= human_datetime(trade.traded_at) %></p>
-        <p class="text-base font-medium text-gray-900">
-          <span><%= fiat_character(product) %></span><%= trade.price %>
-        </p>
-      </div>
-    </div>
-  </div>
+  <%= for product <- @products do %>
+    <%= live_component @socket, CryptoDashboardWeb.ProductComponent, id: product %>
   <% end %>
 </div>
