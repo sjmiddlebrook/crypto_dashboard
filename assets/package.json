@@ -1,7 +1,8 @@
 {
   "scripts": {
     "dev": "vite build --watch --minify false --emptyOutDir false --clearScreen false --mode development --sourcemap true",
-    "build": "vite build"
+    "build": "vite build",
+    "deploy": "vite build"
   },
   "dependencies": {
     "alpinejs": "^3.7.1",
