@@ -1,15 +1,7 @@
 module.exports = {
-  mode: 'jit',
-  purge: [
-    './js/**/*.js',
-    '../lib/*_web/**/*.*ex'
-  ],
-  darkMode: false, // or 'media' or 'class'
+  content: ['./src/**/*.{html,js}', '../lib/**/*.*ex'],
   theme: {
     extend: {},
   },
-  variants: {
-    extend: {},
-  },
   plugins: [],
-}
+};

@@ -14,18 +14,7 @@ config :crypto_dashboard, CryptoDashboardWeb.Endpoint,
   code_reloader: true,
   debug_errors: true,
   secret_key_base: "4kIE4SclSb8ra4BXB3i3URpO7bSoGb/2+Gvb5w/ZT3eJ6IK/MryQzR73HyGhczZ3",
-  watchers: [
-    # Start the esbuild watcher by calling Esbuild.install_and_run(:default, args)
-    esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]},
-    npx: [
-      "tailwindcss",
-      "--input=css/app.css",
-      "--output=../priv/static/assets/app.css",
-      "--postcss",
-      "--watch",
-      cd: Path.expand("../assets", __DIR__)
-    ]
-  ]
+  watchers: []
 
 # ## SSL Support
 #
