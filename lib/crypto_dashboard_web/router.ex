@@ -19,7 +19,7 @@ defmodule CryptoDashboardWeb.Router do
 
     # get "/", PageController, :index
     get "/", ProductController, :index
-    live "/btc", CryptoDashboardLive
+    live "/live", CryptoDashboardLive
   end
 
   # Other scopes may use custom stacks.
